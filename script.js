@@ -1,34 +1,34 @@
-document.getElementById('infoForm').addEventListener('submit', function (e) {
-  e.preventDefault();
+document.addEventListener("DOMContentLoaded", () => {
+    const splashScreen = document.getElementById("splashScreen");
+    const loginScreen = document.getElementById("loginScreen");
+    const systemScreen = document.getElementById("systemScreen");
 
-  const { jsPDF } = window.jspdf;
-  const pdf = new jsPDF();
+    const tabs = document.querySelectorAll(".navbar button");
+    const tabContents = document.querySelectorAll(".tab-content");
 
-  // إعداد النصوص من النموذج
-  const fullName = document.getElementById('fullName').value;
-  const phone = document.getElementById('phone').value;
-  const username = document.getElementById('username').value;
-  const password = document.getElementById('password').value;
-  const secretCode = document.getElementById('secretCode').value;
-  const telegram = document.getElementById('telegram').value;
+    // عرض شاشة البداية لمدة 5 ثوانٍ
+    setTimeout(() => {
+        splashScreen.classList.add("hidden");
+        loginScreen.classList.remove("hidden");
+    }, 5000);
 
-  // إعداد النصوص في PDF
-  pdf.setFont('ArialUnicode', 'normal');
-  pdf.text(`الاسم الكامل: ${fullName}`, 10, 10);
-  pdf.text(`رقم الهاتف: ${phone}`, 10, 20);
-  pdf.text(`اسم المستخدم: ${username}`, 10, 30);
-  pdf.text(`كلمة المرور: ${password}`, 10, 40);
-  pdf.text(`الرمز السري: ${secretCode}`, 10, 50);
-  pdf.text(`يوزر التليجرام: ${telegram}`, 10, 60);
+    // الدخول إلى النظام بالضغط على F7
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "F7") {
+            loginScreen.classList.add("hidden");
+            systemScreen.classList.remove("hidden");
+        }
+    });
 
-  // تحميل PDF
-  pdf.save('form-data.pdf');
-});
-// استماع للزر "ابدأ"
-document.getElementById('startButton').addEventListener('click', function () {
-  // إظهار استمارة النموذج عند الضغط على الزر
-  document.getElementById('formContainer').style.display = 'block';
+    // التحكم بالتبويبات
+    tabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+            tabs.forEach((btn) => btn.classList.remove("active"));
+            tabContents.forEach((content) => content.classList.remove("active"));
 
-  // يمكن إضافة أكشن إضافي مثل إخفاء الزر
-  this.style.display = 'none';
+            tab.classList.add("active");
+            const tabId = tab.getAttribute("data-tab");
+            document.getElementById(`${tabId}Tab`).classList.add("active");
+        });
+    });
 });
