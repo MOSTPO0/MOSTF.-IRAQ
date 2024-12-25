@@ -12,9 +12,9 @@ document.addEventListener("DOMContentLoaded", () => {
         loginScreen.classList.remove("hidden");
     }, 5000);
 
-    // الدخول إلى النظام بالضغط على F7
+    // الدخول إلى النظام بالضغط على زر 6
     document.addEventListener("keydown", (e) => {
-        if (e.key === "F7") {
+        if (e.key === "6") { // التحقق من المفتاح
             loginScreen.classList.add("hidden");
             systemScreen.classList.remove("hidden");
         }
