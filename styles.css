@@ -1,86 +1,168 @@
-/* إعدادات عامة */
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f9;
-    color: #333;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to bottom, black, #002244);
+  color: white;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .hidden {
-    display: none;
+  display: none;
 }
 
-/* شاشة البداية */
-#splashScreen {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: #fff;
+#login-container {
+  text-align: center;
 }
 
-.logo {
-    width: 200px;
-    height: auto;
+#login-container input {
+  margin: 10px 0;
+  padding: 10px;
+  width: 200px;
+  border: none;
+  border-radius: 5px;
 }
 
-/* شاشة تسجيل الدخول */
-#loginScreen {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: #f0f0f5;
+#login-container button {
+  padding: 10px 20px;
+  border: none;
+  background-color: #0055aa;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-.login-container {
-    text-align: center;
+#login-container button:hover {
+  background-color: #0077cc;
+}
+
+#error-message {
+  color: red;
+}
+
+#dashboard nav {
+  display: flex;
+  justify-content: space-around;
+  background-color: #003366;
+  padding: 10px;
+}
+
+#dashboard nav button {
+  background-color: #0055aa;
+  border: none;
+  padding: 10px;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#dashboard nav button:hover {
+  background-color: #0077cc;
+}
+
+section {
+  display: none;
+  padding: 20px;
+}
+
+section.active {
+  display: block;
+  text-align: center;
+}
+/* باقي التنسيقات كما هي */
+
+#admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+#admin-table th, #admin-table td {
+  border: 1px solid white;
+  padding: 10px;
+  text-align: center;
+}
+
+#admin-table th {
+  background-color: #0055aa;
+}
+
+#add-admin-form,
+#new-admin-fields {
+  margin-top: 20px;
+}
+
+#add-admin-form input,
+#new-admin-fields input {
+  display: block;
+  margin: 10px auto;
+  padding: 10px;
+  width: 80%;
+}
+
+#add-admin-form button,
+#new-admin-fields button {
+  padding: 10px 20px;
+  background-color: #0055aa;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#add-admin-form button:hover,
+#new-admin-fields button:hover {
+  background-color: #0077cc;
+}
+
+.hidden {
+  display: none;
+}
+.hidden {
+  display: none;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+table, th, td {
+  border: 1px solid #ccc;
+  text-align: left;
+}
+
+th, td {
+  padding: 10px;
 }
 
 button {
-    padding: 10px 20px;
-    font-size: 16px;
-    margin-top: 10px;
-    cursor: pointer;
+  margin: 10px 0;
+}
+.status-circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: green;
+  cursor: pointer;
+  display: inline-block;
+}
+.status-circle.sold {
+  background-color: red;
+}
+.hidden {
+  display: none;
 }
 
-/* النظام */
-#systemScreen {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
+#telegram-bot {
+  margin-top: 20px;
 }
 
-.navbar {
-    display: flex;
-    background-color: #333;
-    padding: 10px;
-}
-
-.navbar button {
-    flex: 1;
-    color: #fff;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 10px;
-    font-size: 16px;
-}
-
-.navbar button:hover {
-    background-color: #575757;
-}
-
-.content {
-    flex: 1;
-    padding: 20px;
-}
-
-.tab-content {
-    display: none;
-}
-
-.tab-content.active {
-    display: block;
+button {
+  margin: 10px 0;
+  padding: 10px 15px;
+  cursor: pointer;
 }
