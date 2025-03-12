@@ -1,9 +1,10 @@
+import asyncio
+import logging
 from aiogram import Bot, Dispatcher, types
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
-from aiogram.utils import executor
-import logging
 
 TOKEN = "7751948851:AAGLNeKJeebBwuccuPMlclUkQa5mUBaC8sc"  # ضع توكن البوت هنا
+
 bot = Bot(token=TOKEN)
 dp = Dispatcher(bot)
 
@@ -26,7 +27,9 @@ async def send_welcome(message: types.Message):
     text = "✨ مـــرحبا بك في بوت يوسف الجامعي\nاختر ما تريده من الأزرار 🛡"
     await message.answer(text, reply_markup=keyboard)
 
-# تشغيل البوت
-if __name__ == "__main__":
+async def main():
     logging.basicConfig(level=logging.INFO)
-    executor.start_polling(dp, skip_updates=True)
+    await dp.start_polling()
+
+if __name__ == "__main__":
+    asyncio.run(main())
